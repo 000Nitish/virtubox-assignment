@@ -1,25 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     
-    // Abhi ke liye Fake Token save kar rahe hain (Backend baad mein jodenge)
-    localStorage.setItem('token', 'sample-token-123'); 
-    
-    // Token set hone ke baad Dashboard par bhej do
-    navigate('/');
+    // API Call (Backend se check karo)
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+        });
+
+        const json = await response.json();
+        console.log(json); // Console mein result dekho
+
+        if (json.success) {
+            // Agar Backend ne kaha "Success", tabhi login karo
+            localStorage.setItem('token', json.authToken);
+            navigate("/");
+            // Page reload taaki Navbar update ho
+            window.location.reload(); 
+        } else {
+            // Agar Backend ne mana kiya, toh Error dikhao
+            alert("Invalid Credentials! Please try again.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Server Error. Backend shuru hai na?");
+    }
+  }
+
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
 
   return (
     <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px' }}>
       <h2 style={{ textAlign: 'center' }}>Login</h2>
       <form onSubmit={handleLogin}>
-        <input type="email" placeholder="Enter Email" required style={{ width: '95%', padding: '10px', margin: '10px 0' }} />
-        <input type="password" placeholder="Enter Password" required style={{ width: '95%', padding: '10px', margin: '10px 0' }} />
+        <input 
+            type="email" 
+            name="email" 
+            value={credentials.email} 
+            onChange={onChange} 
+            placeholder="Enter Email" 
+            required 
+            style={{ width: '95%', padding: '10px', margin: '10px 0' }} 
+        />
+        <input 
+            type="password" 
+            name="password" 
+            value={credentials.password} 
+            onChange={onChange} 
+            placeholder="Enter Password" 
+            required 
+            style={{ width: '95%', padding: '10px', margin: '10px 0' }} 
+        />
         <button type="submit" style={{ width: '100%', padding: '10px', background: '#282c34', color: 'white', border: 'none', cursor: 'pointer' }}>Login</button>
       </form>
       <p style={{ textAlign: 'center', marginTop: '10px' }}>
