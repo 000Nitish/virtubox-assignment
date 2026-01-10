@@ -13,6 +13,28 @@ Follow these steps to run the project locally on your machine.
 ## Prerequisites
 Make sure you have Node.js installed on your system.
 
+# VirtuBox Assignment
+
+## Tech Stack
+* **Frontend:** React.js, React Router, Context API, Vite.
+* **Backend:** Node.js, Express.js.
+* **Database:** MongoDB Atlas (Cloud).
+* **Authentication:** JWT, Bcryptjs.
+
+## Project Setup Guide
+
+Follow these steps to run the project locally on your machine.
+
+### Prerequisites
+Make sure you have **Node.js** and **Git** installed on your system.
+
+### 1. Clone the Repository
+Open your terminal and run the following command to download the code:
+
+```bash
+git clone https://github.com/000Nitish/virtubox-assignment.git
+cd <YOUR_REPO_NAME>
+
 ## 1. Backend Setup (Server)
 1.  Open a terminal and navigate to the `backend` folder:
     ```bash
@@ -53,19 +75,19 @@ Make sure you have Node.js installed on your system.
 ## Folder Structure
 
 Assingment/
-├── backend/            # API, Database connection, Models
-│   ├── middleware/     # JWT verification
-│   ├── models/         # Database Schemas (User, Note)
-│   ├── routes/         # API Routes (Auth, Notes)
-│   ├── .env            # Environment variables (Hidden)
-│   └── server.js       # Entry point
+├── backend/            
+│   ├── middleware/    
+│   ├── models/        
+│   ├── routes/         
+│   ├── .env           
+│   └── server.js     
 │
-└── frontend/           # React Application
+└── frontend/           
     ├── src/
-    │   ├── components/ # Navbar, NoteItem, Alerts
-    │   ├── context/    # Context API (NoteState)
-    │   ├── pages/      # Home, Login, Signup
-    │   └── App.jsx     # Main Component
+    │   ├── components/ 
+    │   ├── context/    
+    │   ├── pages/      
+    │   └── App.jsx    
 
 
 # Method,Endpoint,Description
