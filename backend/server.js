@@ -14,8 +14,9 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.log("MongoDB Connection Error: ", err));
 
-// Routes Import Karein (Yeh line add karein)
+// Routes Import 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/notes', require('./routes/notes'));
 
 app.get('/', (req, res) => {
     res.send('VirtuTask Server is Running!');
