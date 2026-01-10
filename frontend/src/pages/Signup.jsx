@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-  // 1. State banaya taaki user ka input store kar sakein
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
-  const navigate = useNavigate(); // Redirect karne ke liye hook
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Page reload hone se roko
+    e.preventDefault(); 
     
-    // 2. API Call (Backend ko data bhejo)
     try {
       const response = await fetch("http://localhost:5000/api/auth/createuser", {
         method: 'POST',
@@ -27,11 +25,9 @@ const Signup = () => {
       console.log(json);
 
       if (json.success) {
-        // 3. Agar Signup successful hua
-        alert("Account Created Successfully! Ab aap Login kar sakte hain."); // Popup
-        navigate("/login"); // Login page par bhej diya
+        alert("Account Created Successfully! Ab aap Login kar sakte hain."); 
+        navigate("/login"); 
       } else {
-        // Agar koi error aaya (jaise email already exists)
         alert("Error: " + (json.error || "Invalid Details"));
       }
     } catch (error) {
