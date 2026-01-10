@@ -3,19 +3,17 @@ const router = express.Router();
 const User = require('../models/User'); 
 const { body, validationResult } = require('express-validator'); 
 const bcrypt = require('bcryptjs'); 
-const jwt = require('jsonwebtoken'); // 1. Ye naya import hai
-require('dotenv').config(); // Secret key ke liye
+const jwt = require('jsonwebtoken'); 
+require('dotenv').config(); 
 
-const JWT_SECRET = process.env.JWT_SECRET; // .env se secret liya
+const JWT_SECRET = process.env.JWT_SECRET; 
 
-// ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
 router.post('/createuser', [
     body('name', 'Name must be at least 3 chars').isLength({ min: 3 }),
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password must be at least 5 chars').isLength({ min: 5 }),
 ], async (req, res) => {
-    let success = false; // Frontend ko error handle karne mein help karega
-
+    let success = false; 
     // Validation Check
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,7 +38,7 @@ router.post('/createuser', [
             email: req.body.email,
         });
 
-        // 2. Token Generate Karo (Ye missing tha)
+        // Generate Tocken
         const data = {
             user: {
                 id: user.id
@@ -48,7 +46,7 @@ router.post('/createuser', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
 
-        // Success Response (Token bhejo)
+        // Success Response 
         success = true;
         res.json({ success, authToken });
 
@@ -58,8 +56,7 @@ router.post('/createuser', [
     }
 });
 
-
-// ROUTE 2: Authenticate a User (Login) using: POST "/api/auth/login". No login required
+//Login
 router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password cannot be blank').exists(),
@@ -83,7 +80,7 @@ router.post('/login', [
             return res.status(400).json({ success, error: "Please try to login with correct credentials" });
         }
 
-        // Token Generate Karo
+        // Generate Tocken
         const data = {
             user: {
                 id: user.id
@@ -91,7 +88,6 @@ router.post('/login', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
         
-        // Token Bhejo
         success = true;
         res.json({ success, authToken });
 
