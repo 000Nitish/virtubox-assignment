@@ -8,7 +8,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    // API Call (Backend se check karo)
+    // API Call 
     try {
         const response = await fetch("http://localhost:5000/api/auth/login", {
             method: 'POST',
@@ -19,16 +19,13 @@ const Login = () => {
         });
 
         const json = await response.json();
-        console.log(json); // Console mein result dekho
+        console.log(json); 
 
         if (json.success) {
-            // Agar Backend ne kaha "Success", tabhi login karo
             localStorage.setItem('token', json.authToken);
             navigate("/");
-            // Page reload taaki Navbar update ho
             window.location.reload(); 
         } else {
-            // Agar Backend ne mana kiya, toh Error dikhao
             alert("Invalid Credentials! Please try again.");
         }
     } catch (error) {
