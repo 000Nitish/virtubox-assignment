@@ -18,7 +18,7 @@ const Navbar = () => {
           <>
             <Link to="/login" style={{ color: 'white', marginRight: '20px', textDecoration: 'none' }}>Login</Link>
             
-            {/* Yahan se duplicate 'color: white' hata diya hai */}
+            {}
             <Link to="/signup" style={{ textDecoration: 'none', background: '#61dafb', padding: '8px 15px', borderRadius: '5px', color: 'black' }}>Signup</Link>
           </>
         ) : (
